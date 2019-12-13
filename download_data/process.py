@@ -1,13 +1,22 @@
+import gzip
 import os
-from bs4 import BeautifulSoup
 import re
 
+from bs4 import BeautifulSoup
+
+DATA_PATH = "../../gigaword_eng_5/data/"
 folders = ["apw_eng"] 
+OUTPUT_PATH = "./data_processed/"
+
+if not os.path.exists(OUTPUT_PATH):
+	os.mkdir(OUTPUT_PATH)
+
 for folder in folders:
-	if os.path.exists("./data_processed/" + folder) == False:
-		os.mkdir("./data_processed/" + folder)
-	for file in os.listdir("./data/" + folder):
-		soup = BeautifulSoup(open(os.path.join("./data/" + folder, file)), "html.parser")
+	if not os.path.exists(OUTPUT_PATH + folder):
+		os.mkdir(OUTPUT_PATH + folder)
+	for filename in os.listdir(DATA_PATH + folder):
+		file = gzip.open(os.path.join(DATA_PATH + folder, filename))
+		soup = BeautifulSoup(file, "html.parser")
 		for doc in soup("doc"):
 			docname = doc.attrs['id']
 			paragraphs = []
@@ -19,6 +28,6 @@ for folder in folders:
 			final = " ".join(paragraphs)
 			if final.strip() == "":
 				continue
-			f = open(os.path.join("./data_processed/", folder, docname), "w")
+			f = open(os.path.join(OUTPUT_PATH, folder, docname), "w")
 			f.write(final)
 			f.close()
