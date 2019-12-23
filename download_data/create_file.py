@@ -4,13 +4,13 @@ import argparse
 from bs4 import BeautifulSoup
 
 parser = argparse.ArgumentParser(description="parse examples from xml")
-parser.add_argument('input_folder', type=str)
-parser.add_argument('out_filename', type=str)
+parser.add_argument('--input_dir', type=str, help="directory containing xml")
+parser.add_argument('--out', type=str, help="output filename")
 args = parser.parse_args()
 
-input_folder = args.input_folder
+input_folder = args.input_dir
 
-f = open("extracted_exs/" + args.out_filename, "w")
+f = open("extracted/" + args.out, "w")
 for file in os.listdir(input_folder):
 	print(file)
 	soup = BeautifulSoup(open(os.path.join(input_folder, file)), "html.parser")
