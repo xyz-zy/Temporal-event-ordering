@@ -9,7 +9,9 @@
 4) Modify the default.sieves file in caevo-master. Comment out all sieves except the AdjacentVerbTimex sieve and TimeTimeSieve.
    Run runcaevo.sh on all files generated from step 3.
 
-5) Grep through the output of runcaevo.sh to identify files with the following text: tlink="ee"
+5) Grep through the output of runcaevo.sh to identify files with the following text: type="ee"
    These files contain event pairs that were ordered according to the above two sieves.
+
+`grep -l -Z -r "type=\"ee\"" *.xml | xargs -0 -I{} mv {} ../sample_ee/`
 
 6) Run create_file.py on the files obtained after Step 5.
