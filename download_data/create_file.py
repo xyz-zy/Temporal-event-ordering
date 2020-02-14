@@ -11,9 +11,9 @@ args = parser.parse_args()
 input_folder = args.input_dir
 
 f = open("extracted/" + args.out, "w")
-for file in os.listdir(input_folder):
-	print(file)
-	soup = BeautifulSoup(open(os.path.join(input_folder, file)), "html.parser")
+for filename in os.listdir(input_folder):
+	print(filename)
+	soup = BeautifulSoup(open(os.path.join(input_folder, filename)), "html.parser")
 	tlinks = [x for x in soup.findAll('tlink')]
 	event_pairs = []
 	events = []
@@ -43,4 +43,6 @@ for file in os.listdir(input_folder):
 		f.write(",".join(event_sent_dict[e1][3])+"\n")
 		f.write("%s \n" % event_sent_dict[e2][1])
 		f.write(",".join(event_sent_dict[e2][3])+"\n")
+		f.write(filename)
+		f.write("\n")
 		f.write("\n")
