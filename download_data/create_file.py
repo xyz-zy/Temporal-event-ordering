@@ -31,7 +31,8 @@ for filename in os.listdir(input_folder):
 			for x in entry.findAll("event"):
 				tags[int(x.attrs['offset'])-1] = x.attrs['eiid']
 			for x in entry.findAll("timex"):
-				tags[int(x.attrs['offset'])-1] = x.attrs['tid']
+				for i in range(int(x.attrs['length'])):
+					tags[int(x.attrs['offset'])-1+i] = x.attrs['tid']
 			event_list = set(events).intersection(set(events_entry.keys()))
 			if len(event_list) > 0:
 				for e in event_list:
